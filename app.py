@@ -6,8 +6,8 @@ import pandas as pd
 leaderboard_df = pd.read_csv('leaderboard.csv')
 
 # Constants
-TITLE = "Leaderboard"
-INTRODUCTION_TEXT = "This is the leaderboard."
+TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
+INTRODUCTION_TEXT = "The leaderboard shows the performance of various models in financial natural language understanding and prediction tasks."
 
 COLS = [
     ("Model", "str"),
