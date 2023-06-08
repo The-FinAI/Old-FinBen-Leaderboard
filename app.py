@@ -37,7 +37,7 @@ def launch_gradio():
 
         # Create a gradio table from pandas dataframe
         leaderboard_table = gr.components.Dataframe(
-            value=leaderboard_df,
+            value=leaderboard_df.values.tolist(),
             headers=[col_name for col_name, _ in COLS],
             datatype=TYPES,
             max_rows=5,
