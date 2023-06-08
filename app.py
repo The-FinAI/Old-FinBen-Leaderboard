@@ -9,6 +9,25 @@ leaderboard_df = pd.read_csv('leaderboard.csv').transpose()
 TITLE = "Leaderboard"
 INTRODUCTION_TEXT = "This is the leaderboard."
 
+COLS = [
+    ("Model", "str"),
+    ("FPB-acc", "number"),
+    ("FPB-F1", "number"),
+    ("FiQA-SA-F1", "number"),
+    ("Headline-AvgF1", "number"),
+    ("NER-EntityF1", "number"),
+    ("FinQA-EmAcc", "number"),
+    ("ConvFinQA-EmAcc", "number"),
+    ("BigData22-Acc", "number"),
+    ("BigData22-MCC", "number"),
+    ("ACL18-Acc", "number"),
+    ("ACL18-MCC", "number"),
+    ("CIKM18-Acc", "number"),
+    ("CIKM18-MCC", "number")
+]
+
+TYPES = [col_type for _, col_type in COLS]
+
 def launch_gradio():
     demo = gr.Blocks()
 
@@ -19,6 +38,8 @@ def launch_gradio():
         # Create a gradio table from pandas dataframe
         leaderboard_table = gr.components.Dataframe(
             value=leaderboard_df,
+            headers=[col_name for col_name, _ in COLS],
+            datatype=TYPES,
             max_rows=5,
             elem_id="leaderboard-table",
         )
