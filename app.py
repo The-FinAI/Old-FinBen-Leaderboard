@@ -3,7 +3,7 @@ import gradio as gr
 import pandas as pd
 
 # Load leaderboard data
-leaderboard_df = pd.read_csv('leaderboard.csv')
+leaderboard_df = pd.read_csv('leaderboard.csv').transpose()
 
 # Constants
 TITLE = "Leaderboard"
