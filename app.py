@@ -16,7 +16,12 @@ def launch_gradio():
         gr.HTML(TITLE)
         gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
 
-        leaderboard_table = gr.Interface.load("gradio.dataframe", leaderboard_df)
+        # Create a gradio table from pandas dataframe
+        leaderboard_table = gr.components.Dataframe(
+            value=leaderboard_df,
+            max_rows=5,
+            elem_id="leaderboard-table",
+        )
 
     demo.launch()
 
