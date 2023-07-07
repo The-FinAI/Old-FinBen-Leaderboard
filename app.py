@@ -72,20 +72,22 @@ def create_leaderboard_table(df, headers, types):
     )
 
 def launch_gradio():
-    with gr.Interface(
-        layout="tab", 
-        inputs=None, 
+    iface = gr.Interface(
+        fn=dummy_fn,
+        layout="tab",
+        inputs=None,
         outputs=None,
         title=TITLE,
         description=INTRODUCTION_TEXT,
         tabs=["Self-hosted evaluation", "Automatic evaluation"],
-    ) as iface:
-        with iface.tab("Self-hosted evaluation"):
-            create_leaderboard_table(leaderboard_df, COLS, TYPES)
+    )
 
-        with iface.tab("Automatic evaluation"):
-            create_leaderboard_table(leaderboard_auto_df, COLS_AUTO, TYPES_AUTO)
-    
+    with iface.tab("Self-hosted evaluation"):
+        create_leaderboard_table(leaderboard_df, COLS, TYPES)
+
+    with iface.tab("Automatic evaluation"):
+        create_leaderboard_table(leaderboard_auto_df, COLS_AUTO, TYPES_AUTO)
+
     iface.launch()
 
 scheduler = BackgroundScheduler()
