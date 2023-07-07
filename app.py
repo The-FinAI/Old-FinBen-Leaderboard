@@ -71,27 +71,22 @@ def create_leaderboard_table(df, headers, types):
         max_rows=10,
     )
 
-def dummy_fn():
-    pass
-
 def launch_gradio():
-    iface = gr.Interface(
-        fn=dummy_fn,
-        layout="tab",
-        inputs=None,
-        outputs=None,
-        title=TITLE,
-        description=INTRODUCTION_TEXT,
-        tabs=["Self-hosted evaluation", "Automatic evaluation"],
-    )
+    demo = gr.Blocks()
 
-    with iface.tab("Self-hosted evaluation"):
-        create_leaderboard_table(leaderboard_df, COLS, TYPES)
+    with demo:
+        gr.HTML(TITLE)
+        gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
 
-    with iface.tab("Automatic evaluation"):
-        create_leaderboard_table(leaderboard_auto_df, COLS_AUTO, TYPES_AUTO)
+        # Create tabs for self-hosted and automatic evaluation
+        gr.Tabs(
+            [
+                {"label": "Self-hosted evaluation", "content": create_leaderboard_table(leaderboard_df, COLS, TYPES)},
+                {"label": "Automatic evaluation", "content": create_leaderboard_table(leaderboard_auto_df, COLS_AUTO, TYPES_AUTO)},
+            ]
+        )
 
-    iface.launch()
+    demo.launch()
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(launch_gradio, "interval", seconds=3600)
