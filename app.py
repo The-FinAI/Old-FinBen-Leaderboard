@@ -4,6 +4,7 @@ import pandas as pd
 
 # Load leaderboard data
 leaderboard_df = pd.read_csv('leaderboard.csv')
+print (leaderboard_df)
 leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv')
 
 # Constants
