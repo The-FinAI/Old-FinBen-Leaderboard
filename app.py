@@ -71,6 +71,9 @@ def create_leaderboard_table(df, headers, types):
         max_rows=10,
     )
 
+def dummy_fn():
+    pass
+
 def launch_gradio():
     iface = gr.Interface(
         fn=dummy_fn,
