@@ -3,9 +3,9 @@ import gradio as gr
 import pandas as pd
 
 # Load leaderboard data
-leaderboard_df = pd.read_csv('leaderboard.csv')
+leaderboard_df = pd.read_csv('leaderboard.csv', header=None)
 print (leaderboard_df)
-leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv')
+leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv', header=None)
 
 # Constants
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
