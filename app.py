@@ -36,7 +36,6 @@ COLS_AUTO = [
     ("FiQA-SA-F1", "number"),
     ("FiQA-SA-missing", "number"),
     ("Headline-AvgF1", "number"),
-    ("Headline-missing", "number"),
     ("NER-EntityF1", "number"),
     ("FinQA-EmAcc", "number"),
     ("BigData22-Acc", "number"),
