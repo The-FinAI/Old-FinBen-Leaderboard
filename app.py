@@ -79,12 +79,10 @@ def launch_gradio():
         gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
 
         # Create tabs for self-hosted and automatic evaluation
-        gr.Tabs(
-            [
-                {"label": "Self-hosted evaluation", "content": create_leaderboard_table(leaderboard_df, COLS, TYPES)},
-                {"label": "Automatic evaluation", "content": create_leaderboard_table(leaderboard_auto_df, COLS_AUTO, TYPES_AUTO)},
-            ]
-        )
+        with gr.Tab("Self-hosted evaluation"):
+            lt = create_leaderboard_table(leaderboard_df, COLS, TYPES)
+        with gr.Tab("Automatic evaluation"):
+            lat = create_leaderboard_table(leaderboard_auto_df, COLS_AUTO, TYPES_AUTO)
 
     demo.launch()
 
