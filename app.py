@@ -2,6 +2,55 @@ import pandas as pd
 import gradio as gr
 from apscheduler.schedulers.background import BackgroundScheduler
 
+COLS = [
+    ("Model", "str"),
+    ("FPB-acc", "number"),
+    ("FPB-F1", "number"),
+    ("FiQA-SA-F1", "number"),
+    ("Headline-AvgF1", "number"),
+    ("NER-EntityF1", "number"),
+    ("FinQA-EmAcc", "number"),
+    ("ConvFinQA-EmAcc", "number"),
+    ("BigData22-Acc", "number"),
+    ("BigData22-MCC", "number"),
+    ("ACL18-Acc", "number"),
+    ("ACL18-MCC", "number"),
+    ("CIKM18-Acc", "number"),
+    ("CIKM18-MCC", "number")
+]
+
+COLS_AUTO = [
+    ("Model", "str"),
+    ("FPB-acc", "number"),
+    ("FPB-F1", "number"),
+    ("FPB-missing", "number"),
+    ("FiQA-SA-F1", "number"),
+    ("FiQA-SA-missing", "number"),
+    ("Headline-AvgF1", "number"),
+    ("NER-EntityF1", "number"),
+    ("FinQA-EmAcc", "number"),
+    ("BigData22-Acc", "number"),
+    ("BigData22-MCC", "number"),
+    ("BigData22-missing", "number"),
+    ("ACL18-Acc", "number"),
+    ("ACL18-MCC", "number"),
+    ("ACL18-missing", "number"),
+    ("CIKM18-Acc", "number"),
+    ("CIKM18-MCC", "number"),
+    ("CIKM18-missing", "number"),
+    ("FOMC-acc", "number"),
+    ("FOMC-F1", "number"),
+    ("FOMC-missing", "number"),
+    ("FinerOrd-EntityF1", "number"),
+    ("FinerOrd-F1", "number"),
+    ("German-Acc", "number"),
+    ("German-MCC", "number"),
+    ("German-missing", "number"),
+    ("Australian-Acc", "number"),
+    ("Australian-MCC", "number"),
+    ("Australian-missing", "number")
+]
+
 # Extract column names
 cols = [col_name for col_name, _ in COLS]
 cols_auto = [col_name for col_name, _ in COLS_AUTO]
