@@ -50,6 +50,8 @@ COLS_AUTO = [
     ("Australian-MCC", "number"),
     ("Australian-missing", "number")
 ]
+TYPES = [col_type for _, col_type in COLS]
+TYPES_AUTO = [col_type for _, col_type in COLS_AUTO]
 
 # Extract column names
 cols = [col_name for col_name, _ in COLS]
