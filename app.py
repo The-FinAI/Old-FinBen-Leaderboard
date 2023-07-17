@@ -62,7 +62,7 @@ leaderboard_df = pd.read_csv('leaderboard.csv', names=cols)
 leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv', names=cols_auto)
 
 # Merge dataframes and replace NaN values with an empty string
-merged_df = pd.merge(leaderboard_df, leaderboard_auto_df, how="outer", on=["Model"]).fillna("")
+merged_df = pd.merge(leaderboard_df, leaderboard_auto_df, how="inner").fillna("")
 print (merged_df.columns)
 
 # Constants
