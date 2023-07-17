@@ -66,6 +66,7 @@ merged_df = pd.merge(leaderboard_df, leaderboard_auto_df, how="inner").fillna(""
 merged_cols = merged_df.columns
 merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
 print (merged_cols)
+print (merged_df)
 
 # Constants
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
