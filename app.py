@@ -60,10 +60,11 @@ cols_auto = [col_name for col_name, _ in COLS_AUTO]
 # Load leaderboard data with column names
 leaderboard_df = pd.read_csv('leaderboard.csv', names=cols)
 leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv', names=cols_auto)
+common_cols = list(set(cols) & set(cols_auto))
 
 # Merge dataframes and replace NaN values with an empty string
 merged_df = pd.merge(
-    leaderboard_df, leaderboard_auto_df, how="inner", on=["Model"]).fillna("")
+    leaderboard_df, leaderboard_auto_df, how="outer", on=common_cols).fillna("")
 merged_cols = merged_df.columns
 merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
 print (merged_cols)
