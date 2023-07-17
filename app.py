@@ -63,7 +63,7 @@ leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv', names=cols_auto)
 
 # Merge dataframes and replace NaN values with an empty string
 merged_df = pd.merge(leaderboard_df, leaderboard_auto_df, how='outer', on=["Model"]).fillna("")
-print (merged_df)
+print (merged_df.columns)
 
 # Constants
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
