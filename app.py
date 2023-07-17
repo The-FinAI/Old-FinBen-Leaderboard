@@ -63,14 +63,14 @@ leaderboard_auto_df = pd.read_csv('leaderboard_auto.csv', names=cols_auto)
 
 # Merge dataframes and replace NaN values with an empty string
 merged_df = pd.merge(leaderboard_df, leaderboard_auto_df, how='outer', on=["Model"]).fillna("")
+print (merged_df)
 
 # Constants
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
 INTRODUCTION_TEXT = "The leaderboard shows the performance of various models in financial natural language understanding and prediction tasks."
 
 # Combine the columns and types for the merged dataframe
-merged_cols = COLS + [col for col in COLS_AUTO if col not in COLS]
-merged_types = TYPES + [col_type for _, col_type in COLS_AUTO if (_, col_type) not in COLS]
+merged_cols, merged_types = [col for col in COLS_AUTO], [col_type for _, col_type in COLS_AUTO]
 
 def create_leaderboard_table(df, headers, types):
     return gr.components.Dataframe(
