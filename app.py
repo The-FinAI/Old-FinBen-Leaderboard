@@ -74,7 +74,7 @@ INTRODUCTION_TEXT = "The leaderboard shows the performance of various models in 
 def create_leaderboard_table(df, headers, types):
     return gr.components.Dataframe(
         value=df.values.tolist(),
-        headers=[col_name for col_name, _ in headers],
+        headers=[col_name for col_name in headers],
         datatype=types,
         max_rows=10,
     )
