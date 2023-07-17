@@ -71,9 +71,6 @@ print (merged_cols)
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
 INTRODUCTION_TEXT = "The leaderboard shows the performance of various models in financial natural language understanding and prediction tasks."
 
-# Combine the columns and types for the merged dataframe
-merged_cols, merged_types = [col for col in COLS_AUTO], [col_type for _, col_type in COLS_AUTO]
-
 def create_leaderboard_table(df, headers, types):
     return gr.components.Dataframe(
         value=df.values.tolist(),
