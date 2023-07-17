@@ -65,10 +65,13 @@ common_cols = list(set(cols) & set(cols_auto))
 # Merge dataframes and replace NaN values with an empty string
 merged_df = pd.merge(
     leaderboard_df, leaderboard_auto_df, how="outer", on=common_cols).fillna("")
+
+merged_df = merged_df.sort_index(axis=1)
+
+# Move 'key' column to the front
+merged_df = merged_df[ ['Model'] + [ col for col in merged_df.columns if col != 'Model' ] ]
 merged_cols = merged_df.columns
 merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
-print (merged_cols)
-print (merged_df)
 
 # Constants
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
