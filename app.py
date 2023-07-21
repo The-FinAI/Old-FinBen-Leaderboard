@@ -48,7 +48,9 @@ COLS_AUTO = [
     ("German-missing", "number"),
     ("Australian-Acc", "number"),
     ("Australian-MCC", "number"),
-    ("Australian-missing", "number")
+    ("Australian-missing", "number"),
+    ("TSA-RMSE", "number"),
+    ("TSA-missing", "number")
 ]
 TYPES = [col_type for _, col_type in COLS]
 TYPES_AUTO = [col_type for _, col_type in COLS_AUTO]
@@ -73,6 +75,23 @@ merged_df = merged_df[ ['Model'] + [ col for col in merged_df.columns if col != 
 merged_cols = merged_df.columns
 merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
 
+# Split merged_df into subtask dataframes
+df_sentiment_analysis = merged_df[["Model", "FPB-acc", "FPB-F1", "FiQA-SA-F1", "Headline-AvgF1"]]
+df_stock_movement_prediction = merged_df[["Model", "BigData22-Acc", "BigData22-MCC", "ACL18-Acc", "ACL18-MCC", "CIKM18-Acc", "CIKM18-MCC"]]
+df_ner = merged_df[["Model", "NER-EntityF1", "FinerOrd-EntityF1", "FinerOrd-F1"]]
+df_credit_scoring = merged_df[["Model", "German-Acc", "German-MCC", "Australian-Acc", "Australian-MCC"]]
+df_number_understanding = merged_df[["Model", "FinQA-EmAcc"]]
+
+
+df_dict = {
+    "Sentiment Analysis": df_sentiment_analysis,
+    "Stock Movement Prediction": df_stock_movement_prediction,
+    "NER": df_ner,
+    "Credit Scoring": df_credit_scoring,
+    "Number Understanding": df_number_understanding,
+}
+
+
 # Constants
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
 INTRODUCTION_TEXT = "The leaderboard shows the performance of various models in financial natural language understanding and prediction tasks."
@@ -92,7 +111,17 @@ def launch_gradio():
         gr.HTML(TITLE)
         gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
 
-        lt = create_leaderboard_table(merged_df, merged_cols, merged_types)
+        for task, df in df_dict.items():
+            headers = df.columns
+            types = ["str"] + ["number"] * (len(headers)-1)
+
+            with demo.section(task):
+                gr.components.Dataframe(
+                    value=df.values.tolist(),
+                    headers=headers,
+                    datatype=types,
+                    max_rows=10,
+                )
 
     demo.launch()
 
