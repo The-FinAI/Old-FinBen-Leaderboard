@@ -78,7 +78,7 @@ merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
 # Split merged_df into subtask dataframes
 df_sentiment_analysis = merged_df[["Model", "FPB-acc", "FPB-F1", "FPB-missing",
     "FiQA-SA-F1", "FiQA-SA-missing", "Headline-AvgF1", "TSA-RMSE",
-    "TSA-missing"]]
+    "TSA-missing", "FOMC-acc", "FOMC-F1", "FOMC-missing"]]
 df_stock_movement_prediction = merged_df[["Model", "BigData22-Acc",
     "BigData22-MCC", "BigData22-missing", "ACL18-Acc", "ACL18-MCC",
     "ACL18-missing", "CIKM18-Acc", "CIKM18-MCC", "CIKM18-missing", ]]
