@@ -96,23 +96,15 @@ df_dict = {
 TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
 INTRODUCTION_TEXT = "The leaderboard shows the performance of various models in financial natural language understanding and prediction tasks."
 
-def create_leaderboard_table(df, headers, types):
+def create_data_interface(df):
+    headers = df.columns
+    types = ["str"] + ["number"] * (len(headers) - 1)
+
     return gr.components.Dataframe(
         value=df.values.tolist(),
         headers=[col_name for col_name in headers],
         datatype=types,
         max_rows=10,
-    )
-
-def create_data_interface(df):
-    headers = df.columns
-    types = ["str"] + ["number"] * (len(headers) - 1)
-
-    return gr.Interface(
-        fn=lambda: df.values.tolist(),  # A function that outputs the data
-        inputs=[],  # No input needed
-        outputs=gr.outputs.Dataframe(headers=headers, datatype=types),
-        layout="vertical"
     )
 
 def launch_gradio():
