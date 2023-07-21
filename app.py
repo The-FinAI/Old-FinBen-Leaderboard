@@ -76,10 +76,15 @@ merged_cols = merged_df.columns
 merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
 
 # Split merged_df into subtask dataframes
-df_sentiment_analysis = merged_df[["Model", "FPB-acc", "FPB-F1", "FiQA-SA-F1", "Headline-AvgF1"]]
-df_stock_movement_prediction = merged_df[["Model", "BigData22-Acc", "BigData22-MCC", "ACL18-Acc", "ACL18-MCC", "CIKM18-Acc", "CIKM18-MCC"]]
+df_sentiment_analysis = merged_df[["Model", "FPB-acc", "FPB-F1", "FPB-missing",
+    "FiQA-SA-F1", "FiQA-SA-missing", "Headline-AvgF1", "TSA-RMSE",
+    "TSA-missing"]]
+df_stock_movement_prediction = merged_df[["Model", "BigData22-Acc",
+    "BigData22-MCC", "BigData22-missing", "ACL18-Acc", "ACL18-MCC",
+    "ACL18-missing", "CIKM18-Acc", "CIKM18-MCC", "CIKM18-missing", ]]
 df_ner = merged_df[["Model", "NER-EntityF1", "FinerOrd-EntityF1", "FinerOrd-F1"]]
-df_credit_scoring = merged_df[["Model", "German-Acc", "German-MCC", "Australian-Acc", "Australian-MCC"]]
+df_credit_scoring = merged_df[["Model", "German-Acc", "German-MCC",
+    "German-missing", "Australian-Acc", "Australian-MCC", "Australian-missing"]]
 df_number_understanding = merged_df[["Model", "FinQA-EmAcc"]]
 
 
