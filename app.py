@@ -114,9 +114,9 @@ def launch_gradio():
         gr.HTML(TITLE)
         gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
 
-        interface_names = list(df_dict.keys())
-        interfaces = [create_data_interface(df) for df in df_dict.values()]
-        gr.TabbedInterface(interfaces, interface_names)
+        for key, df in df_dict.items():
+            with gr.Tab(key):
+                create_data_interface(df)
 
     demo.launch()
 
