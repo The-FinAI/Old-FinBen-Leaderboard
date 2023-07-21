@@ -104,6 +104,17 @@ def create_leaderboard_table(df, headers, types):
         max_rows=10,
     )
 
+def create_data_interface(df):
+    headers = df.columns
+    types = ["str"] + ["number"] * (len(headers) - 1)
+
+    return gr.Interface(
+        fn=lambda: df.values.tolist(),  # A function that outputs the data
+        inputs=[],  # No input needed
+        outputs=gr.outputs.Dataframe(headers=headers, datatype=types),
+        layout="vertical"
+    )
+
 def launch_gradio():
     demo = gr.Blocks()
 
@@ -111,17 +122,9 @@ def launch_gradio():
         gr.HTML(TITLE)
         gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
 
-        for task, df in df_dict.items():
-            headers = df.columns
-            types = ["str"] + ["number"] * (len(headers)-1)
-
-            with demo.section(task):
-                gr.components.Dataframe(
-                    value=df.values.tolist(),
-                    headers=headers,
-                    datatype=types,
-                    max_rows=10,
-                )
+        interface_names = list(df_dict.keys())
+        interfaces = [create_data_interface(df) for df in df_dict.values()]
+        gr.TabbedInterface(interfaces, interface_names)
 
     demo.launch()
 
