@@ -51,6 +51,12 @@ COLS_AUTO = [
     ("Australian-missing", "number"),
     ("TSA-RMSE", "number"),
     ("TSA-missing", "number")
+    ("MLESG-F1", "number"),
+    ("MLESG-missing", "number"),
+    ("Finarg-ECCAUC-F1", "number"),
+    ("Finarg-ECCAUC-missing", "number"),
+    ("Finarg-ECCARC-F1", "number"),
+    ("Finarg_ECCARC-missing", "number"),
 ]
 TYPES = [col_type for _, col_type in COLS]
 TYPES_AUTO = [col_type for _, col_type in COLS_AUTO]
