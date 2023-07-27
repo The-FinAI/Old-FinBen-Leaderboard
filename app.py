@@ -53,10 +53,26 @@ COLS_AUTO = [
     ("TSA-missing", "number")
     ("MLESG-F1", "number"),
     ("MLESG-missing", "number"),
+    ("FSRL-entity-F1", "number"),
+    ("FSRL-F1", "number"),
+    ("CFA-acc", "number"),
+    ("CFA-F1", "number"),
+    ("CFA-missing", "number"),
     ("Finarg-ECCAUC-F1", "number"),
     ("Finarg-ECCAUC-missing", "number"),
     ("Finarg-ECCARC-F1", "number"),
     ("Finarg_ECCARC-missing", "number"),
+    ("CD-Entity-F1", "number"),
+    ("CD-F1", "number"),
+    ("MultiFin-EN-acc", "number"),
+    ("MultiFin-EN-F1", "number"),
+    ("MultiFin-EN-missing", "number"),
+    ("MA-acc", "number"),
+    ("MA-F1", "number"),
+    ("MA-missing", "number"),
+    ("Causal20-sc-acc", "number"),
+    ("Causal20-sc-F1", "number"),
+    ("Causal20-sc-missing", "number"),
 ]
 TYPES = [col_type for _, col_type in COLS]
 TYPES_AUTO = [col_type for _, col_type in COLS_AUTO]
