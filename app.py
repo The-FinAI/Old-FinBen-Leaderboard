@@ -50,7 +50,7 @@ COLS_AUTO = [
     ("Australian-MCC", "number"),
     ("Australian-missing", "number"),
     ("TSA-RMSE", "number"),
-    ("TSA-missing", "number")
+    ("TSA-missing", "number"),
     ("MLESG-F1", "number"),
     ("MLESG-missing", "number"),
     ("FSRL-entity-F1", "number"),
