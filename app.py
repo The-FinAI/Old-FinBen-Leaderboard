@@ -73,6 +73,18 @@ COLS_AUTO = [
     ("Causal20-sc-acc", "number"),
     ("Causal20-sc-F1", "number"),
     ("Causal20-sc-missing", "number"),
+    ("TATQA-EmAcc", "number"),
+    ("FNXL-entity-F1", "number"),
+    ("FNXL-F1", "number"),
+    ("FinRED-precision", "number"),
+    ("FinRED-recall", "number"),
+    ("FinRED-F1", "number"),
+    ("ECTSUM-rouge1", "number"),
+    ("ECTSUM-rouge2", "number"),
+    ("ECTSUM-rougeL", "number"),
+    ("EDTSUM-rouge1", "number"),
+    ("EDTSUM-rouge2", "number"),
+    ("EDTSUM-rougeL", "number"),
 ]
 TYPES = [col_type for _, col_type in COLS]
 TYPES_AUTO = [col_type for _, col_type in COLS_AUTO]
@@ -134,6 +146,41 @@ def create_data_interface(df):
         max_rows=10,
     )
 
+def plot_radar_chart(df, attributes, category_name):
+    N = len(attributes)
+
+    # Compute the angle of each axis in the plot
+    angles = [n / float(N) * 2 * np.pi for n in range(N)]
+    angles += angles[:1]
+
+    # Create a radar/spider chart
+    plt.figure(figsize=(10, 7))
+    ax = plt.subplot(111, polar=True)
+    ax.set_theta_offset(np.pi / 2)
+    ax.set_theta_direction(-1)
+    
+    # Set labels
+    plt.xticks(angles[:-1], attributes, color='grey', size=10)
+
+    # Plot line for each model
+    for _, row in df.iterrows():
+        model_name = row['Model']
+        values = row.drop('Model').values.tolist()
+        values += values[:1]
+        ax.plot(angles, values, linewidth=2, linestyle='solid', label=model_name)
+        ax.fill(angles, values, alpha=0.1)
+
+    ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
+    plt.title(category_name, size=20, color='black', y=1.1)
+    plt.close()
+
+    return plt
+
+def create_data_interface_for_aggregated(df, category_name):
+    attributes = df.columns[1:]
+    plt = plot_radar_chart(df, attributes, category_name)
+    return plt
+
 def launch_gradio():
     demo = gr.Blocks()
 
@@ -144,6 +191,8 @@ def launch_gradio():
         for key, df in df_dict.items():
             with gr.Tab(key):
                 create_data_interface(df)
+                plot = create_data_interface_for_aggregated(df, key)
+                gr.Plot(plot)
 
     demo.launch()
 
