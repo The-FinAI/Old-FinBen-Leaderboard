@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import gradio as gr
+import matplotlib.pyplot as plt
 from apscheduler.schedulers.background import BackgroundScheduler
 
 COLS = [
