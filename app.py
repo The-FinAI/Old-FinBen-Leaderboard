@@ -150,8 +150,11 @@ df_dict = {
 TITLE = '<h1 align="center" id="space-title">🐲 PIXIU FLARE Leaderboard</h1>'
 # TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
 INTRODUCTION_TEXT = """📊 The PIXIU FLARE Leaderboard is designed to rigorously track, rank, and evaluate state-of-the-art models in financial Natural Language Understanding and Prediction. 
+
 📈 Unique to FLARE, our leaderboard not only covers standard NLP tasks but also incorporates financial prediction tasks such as stock movement and credit scoring, offering a more comprehensive evaluation for real-world financial applications.
+
 📚 Our evaluation metrics include, but are not limited to, Accuracy, F1 Score, ROUGE score, BERTScore, and Matthews correlation coefficient (MCC), providing a multidimensional assessment of model performance.
+
 🔗 For more details, refer to our GitHub page [here](https://github.com/ChanceFocus/PIXIU).
 """
 
