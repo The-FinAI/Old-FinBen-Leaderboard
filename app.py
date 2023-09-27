@@ -7,24 +7,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from apscheduler.schedulers.background import BackgroundScheduler
 
-COLS = [
-    ("Model", "str"),
-    ("FPB-acc", "number"),
-    ("FPB-F1", "number"),
-    ("FiQA-SA-F1", "number"),
-    ("Headline-AvgF1", "number"),
-    ("NER-EntityF1", "number"),
-    ("FinQA-EmAcc", "number"),
-    ("ConvFinQA-EmAcc", "number"),
-    ("BigData22-Acc", "number"),
-    ("BigData22-MCC", "number"),
-    ("ACL18-Acc", "number"),
-    ("ACL18-MCC", "number"),
-    ("CIKM18-Acc", "number"),
-    ("CIKM18-MCC", "number")
-]
-
-COLS_AUTO = [
+ENG_COLS = [
     ("Model", "str"),
     ("FPB-acc", "number"),
     ("FPB-F1", "number"),
@@ -85,64 +68,80 @@ COLS_AUTO = [
     ("FinRED-precision", "number"),
     ("FinRED-recall", "number"),
     ("FinRED-F1", "number"),
-    ("ECTSUM-rouge1", "number"),
-    ("ECTSUM-rouge2", "number"),
-    ("ECTSUM-rougeL", "number"),
+    ("ECTSUM-Rouge1", "number"),
+    ("ECTSUM-Rouge2", "number"),
+    ("ECTSUM-RougeL", "number"),
     ("ECTSUM-BertScore", "number"),
     ("ECTSUM-BARTScore", "number"),
-    ("EDTSUM-rouge1", "number"),
-    ("EDTSUM-rouge2", "number"),
-    ("EDTSUM-rougeL", "number"),
+    ("EDTSUM-Rouge1", "number"),
+    ("EDTSUM-Rouge2", "number"),
+    ("EDTSUM-RougeL", "number"),
     ("EDTSUM-BertScore", "number"),
     ("EDTSUM-BARTScore", "number"),
 ]
-TYPES = [col_type for _, col_type in COLS]
-TYPES_AUTO = [col_type for _, col_type in COLS_AUTO]
+
+SPA_COLS = [
+    ("Model", "str"),
+    ("MultiFin-F1", "number"),
+    ("MultiFin-Acc", "number"),
+    ("FNS-Rouge1", "number"),
+    ("FNS-Rouge2", "number"),
+    ("FNS-RougeL", "number"),
+    ("EFP-F1", "number"),
+    ("EFP-Acc", "number"),
+    ("EFPA-F1", "number"),
+    ("EFPA-Acc", "number"),
+    ("TSA-F1", "number"),
+    ("TSA-Acc", "number"),
+    ("FinanceES-F1", "number"),
+    ("FinanceES-Acc", "number"),
+]
+ 
 
 # Extract column names
-cols = [col_name for col_name, _ in COLS]
-cols_auto = [col_name for col_name, _ in COLS_AUTO]
+eng_cols = [col_name for col_name, _ in ENG_COLS]
+eng_cates = {
+    "Sentiment Analysis": ["Model", "FPB-acc", "FPB-F1", "FPB-missing",
+        "FiQA-SA-F1", "FiQA-SA-missing", "Headline-AvgF1", "TSA-RMSE",
+        "TSA-missing", "FOMC-acc", "FOMC-F1", "FOMC-missing"],
+    "NER": ["Model", "NER-EntityF1", "FinerOrd-EntityF1", "FinerOrd-F1"],
+    "Number Understanding": ["Model", "FinQA-EmAcc", "ConvFinQA-EmAcc"],
+    "Text Summarization": ["Model", "ECTSUM-Rouge1", "ECTSUM-Rouge2",
+        "ECTSUM-RougeL", "ECTSUM-BertScore", "ECTSUM-BARTScore",
+        "EDTSUM-Rouge1", "EDTSUM-Rouge2", "EDTSUM-RougeL", "EDTSUM-BertScore", "EDTSUM-BARTScore",],
+    "Stock Movement Prediction": ["Model", "BigData22-Acc",
+        "BigData22-MCC", "BigData22-missing", "ACL18-Acc", "ACL18-MCC",
+        "ACL18-missing", "CIKM18-Acc", "CIKM18-MCC", "CIKM18-missing", ],
+    "Credit Scoring": ["Model", "German-Acc", "German-MCC",
+        "German-missing", "Australian-Acc", "Australian-MCC", "Australian-missing"],
+}
 
-# Load leaderboard data with column names
-leaderboard_df = pd.read_csv('leaderboard.csv', names=cols)
-leaderboard_auto_df = pd.read_csv('present_result.csv', names=cols_auto)
-common_cols = list(set(cols) & set(cols_auto))
+spa_cols = [col_name for col_name, _ in SPA_COLS]
+spa_cates = {
+    "Sentiment Analysis": ["Model", "TSA-Acc", "TSA-F1", "FinanceES-Acc", "FinanceES-F1"],
+    "Examination": ["Model", "EFP-Acc", "EFP-F1", "EFPA-Acc", "EFPA-F1"],
+    "Classification": ["Model", "MultiFin-Acc", "MultiFin-F1"],
+    "Text Summarization": ["Model", "FNS-Rouge1", "FNS-Rouge2", "FNS-RougeL",],
+}
 
-# Merge dataframes and replace NaN values with an empty string
-# merged_df = pd.merge(
-#     leaderboard_df, leaderboard_auto_df, how="outer", on=common_cols).fillna("")
-merged_df = leaderboard_auto_df
+def create_df_dict(lang, lang_cols, cates):
+    # Load leaderboard data with column names
+    leaderboard_df = pd.read_csv(f'{lang}_result.csv', names=lang_cols)
+    leaderboard_df = leaderboard_df.sort_index(axis=1)
+    # Move 'key' column to the front
+    leaderboard_df = leaderboard_df[ ['Model'] + [ col for col in leaderboard_df.columns if col != 'Model' ] ]
+    cols = leaderboard_df.columns
+    types = ["str"] + ["number"] * (len(lang_cols)-1)
 
-merged_df = merged_df.sort_index(axis=1)
+    # Split merged_df into subtask dataframes
+    df_dict = {}
+    for key, selected_columns in cates.items():
+        df_dict[key] = leaderboard_df[selected_columns]
+    return df_dict
 
-# Move 'key' column to the front
-merged_df = merged_df[ ['Model'] + [ col for col in merged_df.columns if col != 'Model' ] ]
-merged_cols = merged_df.columns
-merged_types = ["str"] + ["number"] * (len(merged_cols)-1)
-
-# Split merged_df into subtask dataframes
-df_sentiment_analysis = merged_df[["Model", "FPB-acc", "FPB-F1", "FPB-missing",
-    "FiQA-SA-F1", "FiQA-SA-missing", "Headline-AvgF1", "TSA-RMSE",
-    "TSA-missing", "FOMC-acc", "FOMC-F1", "FOMC-missing"]]
-df_stock_movement_prediction = merged_df[["Model", "BigData22-Acc",
-    "BigData22-MCC", "BigData22-missing", "ACL18-Acc", "ACL18-MCC",
-    "ACL18-missing", "CIKM18-Acc", "CIKM18-MCC", "CIKM18-missing", ]]
-df_ner = merged_df[["Model", "NER-EntityF1", "FinerOrd-EntityF1", "FinerOrd-F1"]]
-df_credit_scoring = merged_df[["Model", "German-Acc", "German-MCC",
-    "German-missing", "Australian-Acc", "Australian-MCC", "Australian-missing"]]
-df_number_understanding = merged_df[["Model", "FinQA-EmAcc", "ConvFinQA-EmAcc"]]
-df_text_summarization = merged_df[["Model", "ECTSUM-rouge1", "ECTSUM-rouge2",
-    "ECTSUM-rougeL", "ECTSUM-BertScore", "ECTSUM-BARTScore",
-    "EDTSUM-rouge1", "EDTSUM-rouge2", "EDTSUM-rougeL", "EDTSUM-BertScore", "EDTSUM-BARTScore",]]
-
-
-df_dict = {
-    "Sentiment Analysis": df_sentiment_analysis,
-    "NER": df_ner,
-    "Number Understanding": df_number_understanding,
-    "Text Summarization": df_text_summarization,
-    "Stock Movement Prediction": df_stock_movement_prediction,
-    "Credit Scoring": df_credit_scoring,
+df_lang = {
+    "English": create_df_dict("english", eng_cols, eng_cates),
+    "Spanish": create_df_dict("spanish", spa_cols, spa_cates),
 }
 
 
@@ -201,35 +200,46 @@ def create_data_interface_for_aggregated(df, category_name):
     plt = plot_radar_chart(df, attributes, category_name)
     return plt
 
+def create_lang_leaderboard(df_dict):
+    new_df = pd.DataFrame()
+    for key, df in df_dict.items():
+        new_df["Model"] = df["Model"]
+        tdf = df.replace('', 0)
+        tdf = tdf[[val for val in tdf.columns if "Model" not in val]]
+        if key == "Sentiment Analysis":
+            tdf = tdf[[val for val in tdf.columns if "F1" in val]]
+        elif key == "Classification":
+            tdf = tdf[[val for val in tdf.columns if "F1" in val]]
+        elif key == "Examination":
+            tdf = tdf[[val for val in tdf.columns if "F1" in val]]
+        elif key == "Stock Movement Prediction":
+            tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
+        elif key == "Credit Scoring":
+            tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
+        elif key == "Text Summarization":
+            tdf = tdf[[val for val in tdf.columns if "Bert" in val or "Rouge" in val]]
+        print ("tdf")
+        print (tdf)
+        new_df[key] = tdf.values.mean(axis=1)
+    print (new_df.values)
+
+    plot = create_data_interface_for_aggregated(new_df, key)
+    gr.Plot(plot)
+
+    for key, df in df_dict.items():
+        with gr.Tab(key):
+            create_data_interface(df)
+
 def launch_gradio():
     demo = gr.Blocks()
 
     with demo:
         gr.HTML(TITLE)
         gr.Markdown(INTRODUCTION_TEXT, elem_classes="markdown-text")
-        new_df = pd.DataFrame()
-        for key, df in df_dict.items():
-            new_df["Model"] = df["Model"]
-            tdf = df.replace('', 0)
-            if key == "Sentiment Analysis":
-                tdf = tdf[[val for val in tdf.columns if "F1" in val]]
-            elif key == "Stock Movement Prediction":
-                tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
-            elif key == "Credit Scoring":
-                tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
-            elif key == "Text Summarization":
-                tdf = tdf[[val for val in tdf.columns if "Bert" in val]]
-            print (tdf)
-            new_df[key] = tdf.values[:, 1:].mean(axis=1)
-        print (new_df)
-
-        plot = create_data_interface_for_aggregated(new_df, key)
-        gr.Plot(plot)
-
-        for key, df in df_dict.items():
+        for key, df_dict in df_lang.items():
             with gr.Tab(key):
-                create_data_interface(df)
-
+                create_lang_leaderboard(df_dict)
+        
     demo.launch()
 
 scheduler = BackgroundScheduler()
