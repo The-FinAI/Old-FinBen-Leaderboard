@@ -96,7 +96,31 @@ SPA_COLS = [
     ("FinanceES-F1", "number"),
     ("FinanceES-Acc", "number"),
 ]
- 
+
+CHI_COLS = [
+    ("Model", "str"),
+    ("AFQMC-Acc", "number"),
+    ("AFQMC-F1", "number"),
+    ("corpus-Acc", "number"),
+    ("corpus-F1", "number"),
+    ("stockA-Acc", "number"),
+    ("stockA-F1", "number"),
+    ("Fineval-Acc", "number"),
+    ("Fineval-F1", "number"),
+    ("NL-Acc", "number"),
+    ("NL-F1", "number"),
+    ("NL2-Acc", "number"),
+    ("NL2-F1", "number"),
+    ("NSP-Acc", "number"),
+    ("NSP-F1", "number"),
+    ("RE-Acc", "number"),
+    ("RE-F1", "number"),
+    ("FE-Acc", "number"),
+    ("FE-F1", "number"),
+    ("stockB-Acc", "number"),
+    ("stockB-F1", "number"),
+]
+
 
 # Extract column names
 eng_cols = [col_name for col_name, _ in ENG_COLS]
@@ -124,6 +148,15 @@ spa_cates = {
     "Text Summarization": ["Model", "FNS-Rouge1", "FNS-Rouge2", "FNS-RougeL",],
 }
 
+chi_cols = [col_name for col_name, _ in CHI_COLS]
+chi_cates = {
+    "Semantic matching": ["Model", "AFQMC-Acc", "AFQMC-F1", "corpus-Acc", "corpus-F1"],
+    "Classification": ["Model", "stockA-Acc", "stockA-F1", "NL-Acc", "NL-F1",
+                       "NL2-Acc", "NL2-F1", "NSP-Acc", "NSP-F1", "RE-Acc", "RE-F1"],
+    "Examination": ["Model", "Fineval-Acc", "Fineval-F1"],
+    "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
+}
+
 def create_df_dict(lang, lang_cols, cates):
     # Load leaderboard data with column names
     leaderboard_df = pd.read_csv(f'{lang}_result.csv', names=lang_cols)
@@ -142,6 +175,7 @@ def create_df_dict(lang, lang_cols, cates):
 df_lang = {
     "English": create_df_dict("english", eng_cols, eng_cates),
     "Spanish": create_df_dict("spanish", spa_cols, spa_cates),
+    "Chinese": create_df_dict("chinese", chi_cols, chi_cates),
 }
 
 
@@ -218,6 +252,8 @@ def create_lang_leaderboard(df_dict):
             tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
         elif key == "Text Summarization":
             tdf = tdf[[val for val in tdf.columns if "Bert" in val or "Rouge" in val]]
+        elif key == "Semantic matching":
+            tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
         print ("tdf")
         print (tdf)
         new_df[key] = tdf.values.mean(axis=1)
