@@ -104,9 +104,9 @@ CHI_COLS = [
     ("corpus-Acc", "number"),
     ("corpus-F1", "number"),
     ("stockA-Acc", "number"),
-    ("stockAC-F1", "number"),
+    ("stockA-F1", "number"),
     ("Fineval-Acc", "number"),
-    ("FinevalC-F1", "number"),
+    ("Fineval-F1", "number"),
     ("NL-Acc", "number"),
     ("NL-F1", "number"),
     ("NL2-Acc", "number"),
@@ -153,7 +153,7 @@ chi_cates = {
     "Semantic matching": ["Model", "AFQMC-Acc", "AFQMC-F1", "corpus-Acc", "corpus-F1"],
     "Classification": ["Model", "stockA-Acc", "stockA-F1", "NL-Acc", "NL-F1",
                        "NL2-Acc", "NL2-F1", "NSP-Acc", "NSP-F1", "RE-Acc", "RE-F1"],
-    "Multiple choice": ["Model", "Fineval-Acc", "Fineval-F1"],
+    "Examination": ["Model", "Fineval-Acc", "Fineval-F1"],
     "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
 }
 
@@ -175,7 +175,7 @@ def create_df_dict(lang, lang_cols, cates):
 df_lang = {
     "English": create_df_dict("english", eng_cols, eng_cates),
     "Spanish": create_df_dict("spanish", spa_cols, spa_cates),
-    "Chinese": create_df_dict("chinese", spa_cols, spa_cates),
+    "Chinese": create_df_dict("chinese", chi_cols, chi_cates),
 }
 
 
@@ -253,8 +253,6 @@ def create_lang_leaderboard(df_dict):
         elif key == "Text Summarization":
             tdf = tdf[[val for val in tdf.columns if "Bert" in val or "Rouge" in val]]
         elif key == "Semantic matching":
-            tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
-        elif key == "Multiple choice":
             tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
         print ("tdf")
         print (tdf)
