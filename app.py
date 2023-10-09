@@ -151,9 +151,10 @@ spa_cates = {
 chi_cols = [col_name for col_name, _ in CHI_COLS]
 chi_cates = {
     "Semantic matching": ["Model", "AFQMC-Acc", "AFQMC-F1", "corpus-Acc", "corpus-F1"],
-    "Classification": ["Model", "stockA-Acc", "stockA-F1", "NL-Acc", "NL-F1",
-                       "NL2-Acc", "NL2-F1", "NSP-Acc", "NSP-F1", "RE-Acc", "RE-F1"],
+    "Classification": ["Model", "NL-Acc", "NL-F1","NL2-Acc", "NL2-F1","NSP-Acc", "NSP-F1"],
+    "Stock Movement Prediction": ["Model", "stockA-Acc", "stockA-F1"]
     "Examination": ["Model", "Fineval-Acc", "Fineval-F1"],
+    "Relation Extraction": ["Model", "RE-Acc", "RE-F1"],
     "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
 }
 
@@ -253,6 +254,8 @@ def create_lang_leaderboard(df_dict):
         elif key == "Text Summarization":
             tdf = tdf[[val for val in tdf.columns if "Bert" in val or "Rouge" in val]]
         elif key == "Semantic matching":
+            tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
+        elif key == "Relation Extraction":
             tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
         print ("tdf")
         print (tdf)
