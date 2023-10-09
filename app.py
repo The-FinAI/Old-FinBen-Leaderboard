@@ -152,7 +152,7 @@ chi_cols = [col_name for col_name, _ in CHI_COLS]
 chi_cates = {
     "Semantic matching": ["Model", "AFQMC-Acc", "AFQMC-F1", "corpus-Acc", "corpus-F1"],
     "Classification": ["Model", "NL-Acc", "NL-F1","NL2-Acc", "NL2-F1","NSP-Acc", "NSP-F1"],
-    "Stock Movement Prediction": ["Model", "stockA-Acc", "stockA-F1"]
+    "Stock Movement Prediction": ["Model", "stockA-Acc", "stockA-F1"],
     "Examination": ["Model", "Fineval-Acc", "Fineval-F1"],
     "Relation Extraction": ["Model", "RE-Acc", "RE-F1"],
     "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
