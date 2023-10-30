@@ -131,7 +131,7 @@ CHI_COLS = [
     ("NA-Rouge1", "number"),
     ("NA-Rouge2", "number"),
     ("NA-RougeL", "number"),
-    ("NER-entity-F1", "number"),
+    ("NER-EntityF1", "number"),
 ]
 
 
@@ -171,7 +171,7 @@ chi_cates = {
     "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
     "NER": ["Model", "NER-EntityF1"],
     "Text Summarization": ["Model", "NA-Rouge1", "NA-Rouge2", "NA-RougeL"],
-    "Q&A": ["Model", "QA-Acc"],
+    "Question Answering": ["Model", "QA-Acc"],
 }
 
 def create_df_dict(lang, lang_cols, cates):
