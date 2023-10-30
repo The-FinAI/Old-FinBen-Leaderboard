@@ -119,6 +119,19 @@ CHI_COLS = [
     ("FE-F1", "number"),
     ("stockB-Acc", "number"),
     ("stockB-F1", "number"),
+    ("19CCKS-Precision", "number"),
+    ("19CCKS-F1", "number"),
+    ("20CCKS-Precision", "number"),
+    ("20CCKS-F1", "number"),
+    ("21CCKS-Precision", "number"),
+    ("21CCKS-F1", "number"),
+    ("22CCKS-Precision", "number"),
+    ("22CCKS-F1", "number"),
+    ("QA-Acc", "number"),
+    ("NA-Rouge1", "number"),
+    ("NA-Rouge2", "number"),
+    ("NA-RougeL", "number"),
+    ("NER-entity-F1", "number"),
 ]
 
 
@@ -154,8 +167,11 @@ chi_cates = {
     "Classification": ["Model", "NL-Acc", "NL-F1","NL2-Acc", "NL2-F1","NSP-Acc", "NSP-F1"],
     "Stock Movement Prediction": ["Model", "stockA-Acc", "stockA-F1"],
     "Examination": ["Model", "Fineval-Acc", "Fineval-F1"],
-    "Relation Extraction": ["Model", "RE-Acc", "RE-F1"],
+    "Relation Extraction": ["Model", "RE-Acc", "RE-F1", "19CCKS-Precision", "19CCKS-F1", "20CCKS-Precision", "20CCKS-F1", "21CCKS-Precision", "21CCKS-F1", "22CCKS-Precision", "22CCKS-F1"],
     "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
+    "NER": ["Model", "NER-EntityF1"],
+    "Text Summarization": ["Model", "NA-Rouge1", "NA-Rouge2", "NA-RougeL"],
+    "Q&A": ["Model", "QA-Acc"],
 }
 
 def create_df_dict(lang, lang_cols, cates):
@@ -257,6 +273,10 @@ def create_lang_leaderboard(df_dict):
             tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
         elif key == "Relation Extraction":
             tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
+        elif key == "Q&A":
+            tdf = tdf[[val for val in tdf.columns if "Acc" in val]]
+        elif key == "NER":
+            tdf = tdf[[val for val in tdf.columns if "EntityF1" in val]]
         print ("tdf")
         print (tdf)
         new_df[key] = tdf.values.mean(axis=1)
