@@ -131,7 +131,22 @@ CHI_COLS = [
     ("NA-Rouge1", "number"),
     ("NA-Rouge2", "number"),
     ("NA-RougeL", "number"),
+    ("NA-BertScore", "number"),
+    ("NA-BARTScore", "number"),
     ("NER-EntityF1", "number"),
+    ("ZHacl-Acc", "number"),
+    ("ZHacl-F1", "number"),
+    ("ZHbigdata-Acc", "number"),
+    ("ZHbigdata-F1", "number"),
+    ("ZHcikm-Acc", "number"),
+    ("ZHcikm-F1", "number"),
+    ("ZHfiqasa-Acc", "number"),
+    ("ZHfiqasa-F1", "number"),
+    ("ZHfifpb-Acc", "number"),
+    ("ZHfifpb-F1", "number"),
+    ("ZHfinqa-EmAcc", "number"),
+    ("ZHconvfinqa-EmAcc", "number"),
+    ("ZHheadlines-AvgF1", "number"),
 ]
 
 
@@ -163,15 +178,18 @@ spa_cates = {
 
 chi_cols = [col_name for col_name, _ in CHI_COLS]
 chi_cates = {
-    "Semantic matching": ["Model", "AFQMC-Acc", "AFQMC-F1", "corpus-Acc", "corpus-F1"],
+    "Semantic matching": ["Model", "AFQMC-Acc", "AFQMC-F1", "corpus-Acc", "corpus-F1","ZHfiqasa-Acc",
+                          "ZHfiqasa-F1","ZHfpb-Acc","ZHfpb-F1","ZHheadlines-AvgF1"],
     "Classification": ["Model", "NL-Acc", "NL-F1","NL2-Acc", "NL2-F1","NSP-Acc", "NSP-F1"],
-    "Stock Movement Prediction": ["Model", "stockA-Acc", "stockA-F1"],
+    "Stock Movement Prediction": ["Model", "stockA-Acc", "stockA-F1","ZHacl-Acc","ZHacl-F1","ZHbigdata-Acc",
+                                  "ZHbigdata-F1","ZHcikm-Acc","ZHbigdata-F1"],
     "Examination": ["Model", "Fineval-Acc", "Fineval-F1"],
-    "Relation Extraction": ["Model", "RE-Acc", "RE-F1", "19CCKS-Precision", "19CCKS-F1", "20CCKS-Precision", "20CCKS-F1", "21CCKS-Precision", "21CCKS-F1", "22CCKS-Precision", "22CCKS-F1"],
+    "Relation Extraction": ["Model", "RE-Acc", "RE-F1", "19CCKS-Precision", "19CCKS-F1", "20CCKS-Precision",
+                            "20CCKS-F1", "21CCKS-Precision", "21CCKS-F1", "22CCKS-Precision", "22CCKS-F1"],
     "Sentiment Analysis": ["Model", "FE-Acc", "FE-F1", "stockB-Acc", "stockB-F1"],
     "NER": ["Model", "NER-EntityF1"],
     "Text Summarization": ["Model", "NA-Rouge1", "NA-Rouge2", "NA-RougeL"],
-    "Question Answering": ["Model", "QA-Acc"],
+    "Question Answering": ["Model", "QA-Acc", "ZHfinqa-EmAcc", "ZHconvfinqa-EmAcc"],
 }
 
 def create_df_dict(lang, lang_cols, cates):
