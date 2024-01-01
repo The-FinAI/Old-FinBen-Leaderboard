@@ -180,7 +180,7 @@ eng_cates = {
         "ACL18-missing", "CIKM18-Acc", "CIKM18-MCC", "CIKM18-missing", ],
     "Credit Scoring": ["Model", "German-Acc", "German-MCC", "German-f1", "German-missing",
                        "Australian-Acc", "Australian-MCC", "Australian-f1", "Australian-missing",
-                       "Lendingclub-Acc", "Lendingclub-MCC", "Lendingclub-f1", "Lendingclub-missing",
+                       "Lendingclub-Acc", "Lendingclub-f1", "Lendingclub-missing",
                        "ccf-Acc", "ccf-MCC", "ccf-f1", "ccf-missing",
                        "ccfraud-Acc", "ccfraud-MCC", "ccfraud-f1", "ccfraud-missing",
                        "polish-Acc", "polish-MCC", "polish-f1", "polish-missing",
