@@ -81,7 +81,6 @@ ENG_COLS = [
     ("German-f1", "number"),
     ("Australian-f1", "number"),
     ("Lendingclub-Acc", "number"),
-    ("Lendingclub-MCC", "number"),
     ("Lendingclub-f1", "number"),
     ("Lendingclub-missing", "number"),
     ("ccf-Acc", "number"),
