@@ -89,7 +89,6 @@ ENG_COLS = [
     ("ccf-f1", "number"),
     ("ccf-missing", "number"),
     ("ccfraud-Acc", "number"),
-    ("ccfraud-MCC", "number"),
     ("ccfraud-f1", "number"),
     ("ccfraud-missing", "number"),
     ("polish-Acc", "number"),
