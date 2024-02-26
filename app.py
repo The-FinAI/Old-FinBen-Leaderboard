@@ -60,7 +60,7 @@ ENG_COLS = [
     ("portoseguro-F1","number"),
     ("portoseguro-MCC","number"),  
     ("travelinsurance-F1","number"),
-    ("travelinsurance-MCC","number"), 
+    ("travelinsurance-MCC","number"),  
 ]
 
 SPA_COLS = [
@@ -137,17 +137,18 @@ CHI_COLS = [
 eng_cols = [col_name for col_name, _ in ENG_COLS]
 eng_cates = {
     "Sentiment Analysis": ["Model", "FPB-F1", "FPB-Acc", "FiQA-SA-F1",
-        "TSA-RMSE","Headlines-AvgF1","Headlines-F1","FOMC-F1","FOMC-F1","FinArg-ACC-MicroF1"
+        "TSA-RMSE","Headlines-AvgF1","FOMC-F1","FOMC-Acc","FinArg-ACC-MicroF1"
         ,"FinArg-ARC-MicroF1","MultiFin-MicroF1","MA-MicroF1","MLESG-MicroF1"],
     "NER": ["Model", "NER-EntityF1", "FINER-ORD-EntityF1", "FinRED-F1","SC-F1","CD-F1"],
-    "Question Answering":["Model","FinQA-EmAcc","TATQA-EmAcc","ConvFinQA-EmAcc","FNXL-EntityF1,FSRL-EntityF1"],
+    "Question Answering":["Model","FinQA-EmAcc","TATQA-EmAcc","ConvFinQA-EmAcc","FNXL-EntityF1","FSRL-EntityF1"],
      "Text Summarization": ["Model", "EDTSUM-Rouge1", "EDTSUM-BertScore","EDTSUM-BartScore","ECTSUM-Rouge1","ECTSUM-BertScore","ECTSUM-BartScore"],
     "Stock Movement Prediction": ["Model", "BigData22-Acc",
         "BigData22-MCC", "ACL18-Acc", "ACL18-MCC", "CIKM18-Acc",
         "CIKM18-MCC", "CIKM18-Acc", "CIKM18-MCC"],
-         "Credit Scoring": ["Model", "German-Acc", "German-MCC", "Australian-Acc", "Australian-MCC",
-         "LendingClub-F1","LendingClub-MCC","ccf-F1","ccf-MCC","ccfraud-F1","ccfraud-MCC","polish-F1","polish-MCC"
+         "Credit Scoring": ["Model", "German-F1", "German-MCC", "Australian-F1", "Australian-MCC",
+         "LendingClub-F1","LendingClub-MCC","ccf-F1","ccf-MCC","ccfraud-F1","ccfraud-MCC","polish-F1","polish-MCC",
          "taiwan-F1","taiwan-MCC","portoseguro-F1","portoseguro-MCC","travelinsurance-F1","travelinsurance-MCC"]
+    ,
 }
 
 spa_cols = [col_name for col_name, _ in SPA_COLS]
@@ -197,15 +198,15 @@ df_lang = {
 
 
 # Constants
-TITLE = '<h1 align="center" id="space-title">🐲 PIXIU FLARE Leaderboard</h1>'
+TITLE = '<h1 align="center" id="space-title">🐲 The FinBen FLARE Leaderboard</h1>'
 # TITLE = "Financial Natural Language Understanding and Prediction Evaluation Benchmark (FLARE) Leaderboard"
-INTRODUCTION_TEXT = """📊 The PIXIU FLARE Leaderboard is designed to rigorously track, rank, and evaluate state-of-the-art models in financial Natural Language Understanding and Prediction. 
+INTRODUCTION_TEXT = """📊 The FinBen FLARE Leaderboard is designed to rigorously track, rank, and evaluate state-of-the-art models in financial Natural Language Understanding and Prediction. 
 
 📈 Unique to FLARE, our leaderboard not only covers standard NLP tasks but also incorporates financial prediction tasks such as stock movement and credit scoring, offering a more comprehensive evaluation for real-world financial applications.
 
 📚 Our evaluation metrics include, but are not limited to, Accuracy, F1 Score, ROUGE score, BERTScore, and Matthews correlation coefficient (MCC), providing a multidimensional assessment of model performance.
 
-🔗 For more details, refer to our GitHub page [here](https://github.com/ChanceFocus/PIXIU).
+🔗 For more details, refer to our GitHub page [here](https://github.com/The-FinAI/PIXIU).
 """
 
 
@@ -299,7 +300,7 @@ def launch_gradio():
             with gr.Tab(key):
                 create_lang_leaderboard(df_dict)
         
-    demo.launch()
+    demo.launch(share=True)
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(launch_gradio, "interval", seconds=3600)
