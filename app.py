@@ -300,7 +300,7 @@ def launch_gradio():
             with gr.Tab(key):
                 create_lang_leaderboard(df_dict)
         
-    demo.launch(share=True)
+    demo.launch()
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(launch_gradio, "interval", seconds=3600)
